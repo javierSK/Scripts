@@ -29,9 +29,9 @@ pipeline {
                     while (params.cmdloop == true) {
                         def userInput = input(
                             id: 'userInput',
-                            message: 'run queries',
+                            message: 'Run queries',
                             parameters: [
-                                [$class: 'TextParameterValue', name: 'qry', value: params.Query]
+                                [$class: 'TextParameterDefinition', name: 'qry', defaultValue: '']
                             ]
                         )
                         try {
