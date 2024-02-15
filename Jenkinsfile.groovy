@@ -1,11 +1,12 @@
 
-
-    parameters{
-        string(name: 'Database', defaultValue: '', description: 'Database to interact')
-        string(name: 'Environment',  defaultValue: '', description: 'Environment where the database is located.')
-        booleanParam(name: 'cmdloop', defaultValue: true, description: 'for loop querys')
-        string(name: 'Query',  defaultValue: '', description: 'query to execute')
-    }
+    properties([
+        parameters{
+            string(name: 'Database', defaultValue: '', description: 'Database to interact')
+            string(name: 'Environment',  defaultValue: '', description: 'Environment where the database is located.')
+            booleanParam(name: 'cmdloop', defaultValue: true, description: 'for loop querys')
+            string(name: 'Query',  defaultValue: '', description: 'query to execute')
+        }
+    ])
 
         stage('user validation') {
             steps {
