@@ -27,15 +27,15 @@ pipeline {
                 script {
                     echo "database: ${params.Database}"
                     while (params.cmdloop == true) {
-                        def userInput = input(
-                            id: 'userInput',
+                        def TextParameter = input(
+                            id: 'TextParameter',
                             message: 'run queries',
                             parameters: [
                                 [$class: 'TextParameter', name: 'qry', defaultValue: params.Query]
                             ]
                         )
                         try {
-                            sh "${userInput}"
+                            sh "${TextParameter}"
                         } catch (Exception ex) {
                             println "error: $ex"
                         }
