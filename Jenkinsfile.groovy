@@ -12,7 +12,7 @@ pipeline {
         stage('user validation') {
             steps {
                 script {
-                    def feedback = input(message: "Doyou have access?", submitterParameter: 'submiterid')
+                    def feedback = input(message: "Do you have access?", submitterParameter: 'submitterid')
                     echo "submitter: ${feedback}"
                     if (!['Bryans Javier Suarez Keim', 'Javier', 'javier'].contains(feedback)) {
                         currentBuild.result = 'ABORTED'
@@ -26,11 +26,16 @@ pipeline {
             steps {
                 script {
                     echo "database: ${params.Database}"
-                    def TextParameter
                     while (params.cmdloop == true) {
-                        TextParameter = input(id: 'TextParameter',message: 'run queries',parameters: [[$class: 'TextParameter', name: 'qry', defaultValue: params.Query]])
+                        def userInput = input(
+                            id: 'userInput',
+                            message: 'run queries',
+                            parameters: [
+                                [$class: 'TextParameterValue', name: 'qry', value: params.Query]
+                            ]
+                        )
                         try {
-                            sh "${TextParameter}"
+                            sh "${userInput}"
                         } catch (Exception ex) {
                             println "error: $ex"
                         }
