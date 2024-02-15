@@ -1,4 +1,6 @@
 
+   
+ import java.util.List<hudson.model.ParameterDefinition  
     properties([
         parameters{
             string(name: 'Database', defaultValue: '', description: 'Database to interact')
