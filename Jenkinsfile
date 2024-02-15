@@ -4,42 +4,34 @@ pipeline {
     parameters{
         string(name: 'Database', defaultValue: '', description: 'Database to interact')
         string(name: 'Environment',  defaultValue: '', description: 'Environment where the database is located.')
+        booleanParam(name: 'cmdloop', defaultValue: true, description: 'for loop querys')
         string(name: 'Query',  defaultValue: '', description: 'query to execute')
     }
 
-    options {
-        // Timeout counter starts AFTER agent is allocated
-        timeout(time: 1, unit: 'SECONDS')
-    }
     stages {
-        stage('Example') {
+        stage('user validation') {
             steps {
-                echo 'Hello World'
+                def feedback = input(message: "Doyou have acces?")
+                echo "submiter:${feedback}"
+                if(!['javier'].contains(feedback)) {
+                    currentBuild.result = 'ABORTED'
+                    error("submiter:${feedback} does not have access")
+                }
+
             }
         }
-    }
-
-    post {
-        always {
-            // Bucle para preguntar el parámetro en loop
-            script {
-                def continuarLoop = true
-                while (continuarLoop) {
-                    def userInput = input(
-                        id: 'replayInput',
-                        message: '¿Desea ejecutar nuevamente con un valor diferente?',
-                        parameters: [string(name: 'Query', defaultValue: '', description: 'query to execute')]
-                    )
-
-                    // Si el usuario decide salir del bucle, establecer continuarLoop a falso
-                    if (userInput == null) {
-                        continuarLoop = false
-                    } else {
-                        // Mostrar el valor del parámetro y continuar el bucle
-                        echo "El valor ingresado es: ${userInput}"
-                    }
+        stage('execute query'){
+            echo "database: ${params.Database}"
+            while(params.cmdloop == true){
+                userInput = input(id: 'userInput', message: 'run querys', parameters: [[$class: 'TextParameter', name: 'qry', defaultValue: params.Query]])
+                try{
+                    sh "${userInput}"
+                }
+                catch(Exception ex){
+                    println "error: $ex"
                 }
             }
         }
     }
+
 }
