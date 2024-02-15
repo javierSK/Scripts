@@ -14,7 +14,7 @@ pipeline {
                 script {
                     def feedback = input(message: "Doyou have access?", submitterParameter: 'submiterid')
                     echo "submitter: ${feedback}"
-                    if (!['javier'].contains(feedback)) {
+                    if (!['Bryans Javier Suarez Keim'].contains(feedback)) {
                         currentBuild.result = 'ABORTED'
                         error("submitter: ${feedback} does not have access")
                     }
