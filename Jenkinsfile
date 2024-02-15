@@ -8,7 +8,6 @@ pipeline {
         string(name: 'Query',  defaultValue: '', description: 'query to execute')
     }
 
-    stages {
         stage('user validation') {
             steps {
                 def feedback = input(message: "Doyou have acces?")
@@ -32,6 +31,4 @@ pipeline {
                 }
             }
         }
-    }
-
 }
