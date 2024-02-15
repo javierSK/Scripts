@@ -26,14 +26,9 @@ pipeline {
             steps {
                 script {
                     echo "database: ${params.Database}"
+                    def TextParameter
                     while (params.cmdloop == true) {
-                        def TextParameter = input(
-                            id: 'TextParameter',
-                            message: 'run queries',
-                            parameters: [
-                                [$class: 'TextParameter', name: 'qry', defaultValue: params.Query]
-                            ]
-                        )
+                        TextParameter = input(id: 'TextParameter',message: 'run queries',parameters: [[$class: 'TextParameter', name: 'qry', defaultValue: params.Query]])
                         try {
                             sh "${TextParameter}"
                         } catch (Exception ex) {
