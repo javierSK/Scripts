@@ -9,7 +9,7 @@
 
         stage('user validation') {
             steps {
-                def feedback = input(message: "Doyou have acces?")
+                def feedback = input(message: "Doyou have acces?", submitterParameter: 'submiterid')
                 echo "submiter:${feedback}"
                 if(!['javier'].contains(feedback)) {
                     currentBuild.result = 'ABORTED'
