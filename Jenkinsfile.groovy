@@ -1,5 +1,4 @@
-pipeline {
-    agent any
+
 
     parameters{
         string(name: 'Database', defaultValue: '', description: 'Database to interact')
@@ -31,4 +30,3 @@ pipeline {
                 }
             }
         }
-}
