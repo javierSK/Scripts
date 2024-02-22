@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                echo 'Hello World'
+                sh'''
+                kubectl apply -f deployment.yaml
+                '''
             }
         }
     }
